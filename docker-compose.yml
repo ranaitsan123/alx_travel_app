@@ -1,0 +1,38 @@
+services:
+  db:
+    image: mysql:8
+    container_name: travel_db
+    environment:
+      MYSQL_DATABASE: travel_db
+      MYSQL_USER: travel_user
+      MYSQL_PASSWORD: travel_pass
+      MYSQL_ROOT_PASSWORD: root_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build: .
+    container_name: travel_web
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - DB_HOST=db
+      - DB_NAME=travel_db
+      - DB_USER=travel_user
+      - DB_PASSWORD=travel_pass
+
+volumes:
+  db_data:
