@@ -118,3 +118,6 @@ alx_travel_app/
 ## License
 
 This project is licensed under the **MIT License**.
+
+<img width="792" height="733" alt="image" src="https://github.com/user-attachments/assets/dade1ed7-44b8-4107-98eb-b8d7d6ae51eb" />
+
